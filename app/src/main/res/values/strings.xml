@@ -6,4 +6,6 @@
     <string name="yam">Yam</string>
     <string name="cheese">Cheese</string>
     <string name="water">Water</string>
+    <string name="get_location">Get Location</string>
+    <string name="edittext_hint">Type in your preferred Store</string>
 </resources>

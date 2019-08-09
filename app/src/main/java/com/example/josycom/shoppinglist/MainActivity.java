@@ -1,21 +1,20 @@
 package com.example.josycom.shoppinglist;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     public static final int TEXT_REQUEST = 1;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private TextView textView1;
-    private TextView textView2;
-    private TextView textView3;
-    private TextView textView4;
-    private TextView textView5;
+    private TextView textView1, textView2, textView3, textView4, textView5;
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         textView3 = findViewById(R.id.textView3);
         textView4 = findViewById(R.id.textView4);
         textView5 = findViewById(R.id.textView5);
+        editText = findViewById(R.id.editText);
 
         //Checks if the last state was saved before reconfiguration and displays the content of the saved state on the TextViews
         if (savedInstanceState != null){
@@ -93,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
         if (!textView5.getText().toString().isEmpty()){
             outState.putBoolean("not_empty", true);
             outState.putString("list_item5", textView5.getText().toString());
+        }
+    }
+    //Searches for any location imputed by the user using any appropriate App
+    public void getLocation(View view) {
+        String loc = editText.getText().toString();
+        Uri addressUri = Uri.parse("geo:0,0?q=" + loc);
+        Intent intent = new Intent(Intent.ACTION_VIEW, addressUri);
+        //Checks if there is an app that can handle the task on the device
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        } else {
+            Log.d(LOG_TAG, "Can't handle this");
         }
     }
 }
